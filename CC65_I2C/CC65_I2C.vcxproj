@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9EA7EC3D-1771-420F-932F-231A35ED1200}</ProjectGuid>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <NMakeOutput>
+    </NMakeOutput>
+    <NMakePreprocessorDefinitions>
+    </NMakePreprocessorDefinitions>
+    <ExecutablePath>$(PATH);C:\cc65\bin</ExecutablePath>
+    <IncludePath>$(VC_IncludePath);C:\cc65\include</IncludePath>
+    <LibraryPath>C:\cc65\lib</LibraryPath>
+    <LibraryWPath />
+    <ExcludePath />
+    <NMakeBuildCommandLine>$(MAKE_HOME)\make -C "$(ProjectDir)\" PROGRAM="$(ProjectDir)$(Configuration)\$(ProjectName)" OPTIONS=debugfile,labelfile
+rmdir /S /Q "$(ProjectDir)obj\Win32"
+rmdir /S /Q "$(SolutionDir)Debug"</NMakeBuildCommandLine>
+    <SourcePath>$(VC_SourcePath);</SourcePath>
+    <NMakeReBuildCommandLine>$(MAKE_HOME)\make clean -C "$(ProjectDir)\" PROGRAM="$(ProjectDir)$(Configuration)\$(ProjectName)"
+$(MAKE_HOME)\make -C "$(ProjectDir)\" PROGRAM="$(ProjectDir)$(Configuration)/$(ProjectName)" OPTIONS=debugfile,labelfile
+rmdir /S /Q "$(ProjectDir)obj\Win32"
+rmdir /S /Q "$(SolutionDir)Debug"</NMakeReBuildCommandLine>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <NMakeCleanCommandLine>$(MAKE_HOME)\make clean -C "$(ProjectDir)\" PROGRAM="$(ProjectDir)$(Configuration)\$(ProjectName)"</NMakeCleanCommandLine>
+    <ReferencePath />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <NMakeOutput>
+    </NMakeOutput>
+    <NMakePreprocessorDefinitions>
+    </NMakePreprocessorDefinitions>
+    <NMakeBuildCommandLine>del /S /Q "$(ProjectDir)makefile.options
+$(MAKE_HOME)\make -C "$(ProjectDir)\" PROGRAM="$(ProjectDir)$(Configuration)\$(ProjectName)"
+rmdir /S /Q "$(ProjectDir)obj\Win32"
+rmdir /S /Q "$(SolutionDir)Release"</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine>del /S /Q "$(ProjectDir)makefile.options
+$(MAKE_HOME)\make clean -C "$(ProjectDir)\" PROGRAM="$(ProjectDir)$(Configuration)\$(ProjectName)"
+$(MAKE_HOME)\make -C "$(ProjectDir)\" PROGRAM="$(ProjectDir)$(Configuration)\$(ProjectName)"
+rmdir /S /Q "$(ProjectDir)obj\Win32"
+rmdir /S /Q "$(SolutionDir)Release"
+</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine>del /S /Q "$(ProjectDir)makefile.options
+$(MAKE_HOME)\make clean -C "$(ProjectDir)\" PROGRAM="$(ProjectDir)$(Configuration)\$(ProjectName)"
+rmdir /S /Q "$(ProjectDir)obj\Win32"
+rmdir /S /Q "$(SolutionDir)Release"</NMakeCleanCommandLine>
+    <ExecutablePath>$(PATH);C:\cc65\bin</ExecutablePath>
+    <IncludePath>$(VC_IncludePath);C:\cc65\include</IncludePath>
+    <ReferencePath />
+    <LibraryPath>C:\cc65\lib</LibraryPath>
+    <ExcludePath />
+    <LibraryWPath />
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\I2C_Driver.c" />
+    <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\PCA9596_Driver.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="makefile" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\I2C_Driver.h" />
+    <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\PCA9596_Driver.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
