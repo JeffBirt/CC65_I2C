@@ -18,10 +18,7 @@ PCA9596 IOBoard_1;
 
 void main(void)
 {
-	unsigned int s = 0;
-	int i = 0;
 	int key = 0;
-	char OK = 1;
 
 	I2C *i2c = createI2C(); // create pointer to I2C 'object'
 	i2c->init();			// initialize I2C driver
@@ -74,9 +71,10 @@ void main(void)
 				inputTest();
 				mainMenu();
 			}
-			else if (key == 'd') //nothing
+			else if (key == 'd') //done
 			{
-				cprintf("Size Of short = %d\r\n", sizeof(short));
+				//return EXIT_SUCCESS;
+				return;
 			}
 		}
 	}
@@ -91,7 +89,7 @@ void mainMenu(void)
 	cprintf("A - Config Boards 0,1\r\n");
 	cprintf("B - Ouput Test\r\n");
 	cprintf("C - Input Test\r\n");
-	cprintf("D - nothing\r\n");
+	cprintf("D - Done\r\n");
 }
 
 unsigned char configBoards(void)
@@ -100,7 +98,7 @@ unsigned char configBoards(void)
 	int key;
 
 	OK = PCA9596_configAll(&IOBoard_0); // configure this PCA9596 chip
-	cprintf("Config Board 0=%d\r\n", OK);
+	cprintf("Config Board 0=%s\r\n", (OK>0) ? "Error" : "OK");
 	OK = PCA9596_configAll(&IOBoard_1); // configure this PCA9596 chip
 	cprintf("Config Board 1=%s\r\n", (OK>0) ? "Error" : "OK");
 	cprintf("Press any key to continue.\r\n");
@@ -127,11 +125,11 @@ void inputTest(void)
 		if (kbhit())
 		{
 			key = cgetc();
-			//OK = PCA9596_readPorts(&IOBoard_0);
-			//OK |= PCA9596_readPorts(&IOBoard_1);
+			OK = PCA9596_readPorts(&IOBoard_0);
+			cprintf("B0 P0: %d, %s\r\n", IOBoard_0.inPort[1], (OK>0) ? "Error" : "OK");
 
-			cprintf("B0, P0: %d\r\n", IOBoard_0.inPort[1]);
-			cprintf("B1, P1: %d\r\n", IOBoard_1.inPort[0]);
+			OK |= PCA9596_readPorts(&IOBoard_1);
+			cprintf("B1 P1: %d, %s\r\n", IOBoard_1.inPort[0], (OK>0) ? "Error" : "OK");
 		}
 	}
 }
@@ -157,15 +155,17 @@ void outputTest(void)
 			if (key == 'a')
 			{
 				IOBoard_0.outPort[0] ^= 0xFF; // toggle all bits
-				//OK = PCA9596_writePorts(&IOBoard_0);
-				cprintf("IOBoard_0.outPort[0]=%d\r\n", IOBoard_0.outPort[0]);
+				OK = PCA9596_writePorts(&IOBoard_0);
+				cprintf("IOBoard_0.outPort[0]=%d, %s\r\n", IOBoard_0.outPort[0], 
+					(OK>0) ? "Error" : "OK");
 
 			}
 			else if (key == 'b')
 			{
 				IOBoard_1.outPort[1] ^= 0xFF; // toggle all bits
-				//OK = PCA9596_writePorts(&IOBoard_1);
-				cprintf("IOBoard_1.outPort[1]=%d\r\n", IOBoard_1.outPort[1]);
+				OK = PCA9596_writePorts(&IOBoard_1);
+				cprintf("IOBoard_1.outPort[1]=%d, %s\r\n", IOBoard_1.outPort[1],
+					(OK>0) ? "Error" : "OK");
 			}
 		}
 	}

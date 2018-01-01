@@ -27,7 +27,6 @@
 #include "i2c_driver.h"
 #include "stdlib.h"
 
-// Hardware-specific support functions that MUST be customized:
 #define I2CSPEED 1 // 100 == 2kHz, 200 == 1kHz
 #define USR_DDR_DEFAULT 0x00
 #define USR_DDR_I2C 0x03
@@ -38,6 +37,7 @@
 #define LINK_D0_IN 0x04 //D0 = SDA
 #define LINK_D0_OUT 0x01
 //#define ARBITRATION
+//#define ACTIVE_LOW // output port is active low hardware, else invert
 
 
 unsigned char started = 0; // global data
@@ -163,25 +163,41 @@ void arbitration_lost(void)
 // Set SDA line HIGH, allow to be pulled up by internal resistor
 void set_SDA(void)
 {
+#ifdef ACTIVE_LOW
 	*usr_port &= ~LINK_D0_OUT;
+#else
+	*usr_port |= LINK_D0_OUT;
+#endif
 }
 
 // Drive SDA line LOW, activly pull down
 void clear_SDA(void)
 {
+#ifdef ACTIVE_LOW
 	*usr_port |= LINK_D0_OUT;	
+#else
+	*usr_port &= ~LINK_D0_OUT;
+#endif
 }
 
 // Set SCL line HIGH, allow to be pulled up by internal resistor
 void set_SCL(void)
 {
+#ifdef ACTIVE_LOW
 	*usr_port &= ~LINK_D1_OUT;	
+#else
+	*usr_port |= LINK_D1_OUT;
+#endif
 }
 
 // Drive SCL line LOW, activly pull down
 void clear_SCL(void)
 {
+#ifdef ACTIVE_LOW
 	*usr_port |= LINK_D1_OUT;
+#else
+	*usr_port &= ~LINK_D1_OUT;
+#endif
 }
 
 // Send start condition
