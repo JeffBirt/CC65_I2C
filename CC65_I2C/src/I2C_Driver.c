@@ -209,17 +209,17 @@ void start(void)
   if (started) 
   {  
     set_SDA(); 
-    delay(); 
+    //delay(); 
     set_SCL();
     
     // Clock stretching
-    while (read_SCL() == 0 && cs < 5) 
-    {  
-      cs++; 
-    } 
+    //while (read_SCL() == 0 && cs < 5) 
+    //{  
+    //  cs++; 
+    //} 
  
     // Repeated start setup time, minimum 4.7us
-    delay();
+    //delay();
   }
 
 #ifdef ARBITRATION
@@ -231,7 +231,7 @@ void start(void)
  
   // SCL is high, set SDA from 1 to 0. 
   clear_SDA(); 
-  delay(); 
+  //delay(); 
   clear_SCL(); 
   started = 1; 
 }
@@ -240,21 +240,21 @@ void stop(void)
 {
 	int cs = 0;
   clear_SDA();
-  delay();
+  //delay();
 
   set_SCL();
   // Clock stretching
-  while (read_SCL() == 0 && cs < 5) 
-  {
-    cs++;
-  } 
+  //while (read_SCL() == 0 && cs < 5) 
+  //{
+  //  cs++;
+  //} 
 
   // Stop bit setup time, minimum 4us 
-  delay(); 
+  //delay(); 
  
   // SCL is high, set SDA from 0 to 1 
   set_SDA();
-  delay(); 
+  //delay(); 
 
 #ifdef ARBITRATION
   if (read_SDA() == 0) 
@@ -292,19 +292,19 @@ void write_bit(unsigned char bit)
   } 
  
   // SDA change propagation delay 
-  delay(); 
+  //delay(); 
  
   // Set SCL high to indicate a new valid SDA value is available
   set_SCL(); 
 
   // Wait for SDA value to be read by slave, minimum of 4us for standard mode 
-  delay(); 
+  //delay(); 
 
 	// Clock stretching
-  while (read_SCL() == 0  && cs < 5) 
-  {
-    cs++; 
-  }
+  //while (read_SCL() == 0  && cs < 5) 
+  //{
+  //  cs++; 
+  //}
  
   // SCL is high, now data is valid
   // If SDA is high, check that nobody else is driving SDA
@@ -329,19 +329,19 @@ unsigned char read_bit(void)
 	set_SDA(); 
  
 	// Wait for SDA value to be written by slave, minimum of 4us for standard mode 
-	delay(); 
+	//delay(); 
 
 	// Set SCL high to indicate a new valid SDA value is available 
 	set_SCL(); 
  
 	// Clock stretching
-	while (read_SCL() == 0 && cs < 5) 
-	{ 
-		cs++;
-	}
+	//while (read_SCL() == 0 && cs < 5) 
+	//{ 
+	//	cs++;
+	//}
  
 	// Wait for SDA value to be written by slave, minimum of 4us for standard mode
-	delay();
+	//delay();
  
 	// SCL is high, read out bit 
 	bit = read_SDA();
@@ -353,13 +353,13 @@ unsigned char read_bit(void)
 } 
 
 // Do nothing loop to act as SCK delay between bits
-void delay(void) 
-{ 
-  volatile int v;
-  int i;
- 
-  for (i = 0; i < I2CSPEED; ++i) 
-  {
-    v;
-  } 
-}
+//void delay(void) 
+//{ 
+//  volatile int v;
+//  int i;
+// 
+//  for (i = 0; i < I2CSPEED; ++i) 
+//  {
+//    v;
+//  } 
+//}

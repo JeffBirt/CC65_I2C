@@ -98,9 +98,9 @@ unsigned char configBoards(void)
 	int key;
 
 	OK = PCA9596_configAll(&IOBoard_0); // configure this PCA9596 chip
-	cprintf("Config Board 0=%s\r\n", (OK>0) ? "Error" : "OK");
+	cprintf("Config Board 0=%s\r\n", (OK>0) ? "OK" : "Error");
 	OK = PCA9596_configAll(&IOBoard_1); // configure this PCA9596 chip
-	cprintf("Config Board 1=%s\r\n", (OK>0) ? "Error" : "OK");
+	cprintf("Config Board 1=%s\r\n", (OK>0) ? "OK" : "Error");
 	cprintf("Press any key to continue.\r\n");
 
 	while (!kbhit())
@@ -126,10 +126,10 @@ void inputTest(void)
 		{
 			key = cgetc();
 			OK = PCA9596_readPorts(&IOBoard_0);
-			cprintf("B0 P0: %d, %s\r\n", IOBoard_0.inPort[1], (OK>0) ? "Error" : "OK");
+			cprintf("B0 P0: %d, %s\r\n", IOBoard_0.inPort[1], (OK>0) ? "OK" : "Error");
 
 			OK |= PCA9596_readPorts(&IOBoard_1);
-			cprintf("B1 P1: %d, %s\r\n", IOBoard_1.inPort[0], (OK>0) ? "Error" : "OK");
+			cprintf("B1 P1: %d, %s\r\n", IOBoard_1.inPort[0], (OK>0) ? "OK" : "Error");
 		}
 	}
 }
@@ -157,7 +157,7 @@ void outputTest(void)
 				IOBoard_0.outPort[0] ^= 0xFF; // toggle all bits
 				OK = PCA9596_writePorts(&IOBoard_0);
 				cprintf("IOBoard_0.outPort[0]=%d, %s\r\n", IOBoard_0.outPort[0], 
-					(OK>0) ? "Error" : "OK");
+					(OK>0) ? "OK" : "Error");
 
 			}
 			else if (key == 'b')
@@ -165,7 +165,7 @@ void outputTest(void)
 				IOBoard_1.outPort[1] ^= 0xFF; // toggle all bits
 				OK = PCA9596_writePorts(&IOBoard_1);
 				cprintf("IOBoard_1.outPort[1]=%d, %s\r\n", IOBoard_1.outPort[1],
-					(OK>0) ? "Error" : "OK");
+					(OK>0) ? "OK" : "Error");
 			}
 		}
 	}
