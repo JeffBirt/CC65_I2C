@@ -45,6 +45,8 @@ unsigned char started = 0; // global data
 static char *const usr_DDR=(char *)0xDD03;
 //static char *const link_status = (char *)0x6000D;
 static char *const usr_port =(char *)0xDD01;
+unsigned char bit, index, byte;
+unsigned char nack = 0;
 
 // ****************************************************************************
 // External functions
@@ -115,8 +117,9 @@ unsigned char readBytes(unsigned char send_stop, unsigned char *rxArray,
 unsigned char writeBytes(unsigned char send_start, unsigned char send_stop,
 									unsigned char *txArray, unsigned int length) 
 { 
-  unsigned char bit, index, byte;
-  unsigned char nack = 0;
+  //unsigned char bit, index, byte;
+  //unsigned char nack = 0;
+	nack = 0;
 
   if (send_start) 
   {
@@ -126,10 +129,12 @@ unsigned char writeBytes(unsigned char send_start, unsigned char send_stop,
 	for (index = 0; index < length; index++)
 	{
 		byte = txArray[index];
-		for (bit = 0; bit < 8; ++bit) 
+		//for (bit = 0; bit < 8; ++bit) 
+		for (bit = 0x80; bit >= 1; bit>>1)
 		{
-			write_bit((byte & 0x80) != 0);
-			byte <<= 1;
+			//write_bit((byte & 0x80) != 0);
+			write_bit((byte & bit) != 0);
+			//byte <<= 1;
 		}
 		nack |= read_bit();	// if any NACK comes back TRUE stays TRUE
   }
@@ -281,7 +286,7 @@ unsigned char read_SCL(void)
 // Write a bit to I2C bus
 void write_bit(unsigned char bit)
 { 
-  int cs = 0;
+  //int cs = 0;
   
   if (bit) 
   { 
@@ -323,7 +328,7 @@ void write_bit(unsigned char bit)
 unsigned char read_bit(void)
 {
 	unsigned char bit;
-	int cs = 0;
+	//int cs = 0;
  
 	// Let the slave drive data 
 	set_SDA(); 

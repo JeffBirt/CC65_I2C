@@ -1,7 +1,7 @@
 Time for 8 bits TX
 
-Config			Time in ms
-Base			30ms
-No Delay		22.4ms
-No clk stretch		7ms
+Config			Time in ms	Rate
+Base			30ms		267 bits/sec
+No Delay		22.4ms		327 bits/sec
+No clk stretch		7ms		1142 bits/sec
 Inline bit set/clr 	6.5~8ms

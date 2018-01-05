@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include "conio.h"
+#include "time.h"
 #include "main.h"
 #include "i2c_driver.h"
 #include "PCA9596_Driver.h"
@@ -96,12 +97,21 @@ unsigned char configBoards(void)
 {
 	unsigned char OK = 1;
 	int key;
+	char i = 0;
 
-	OK = PCA9596_configAll(&IOBoard_0); // configure this PCA9596 chip
-	cprintf("Config Board 0=%s\r\n", (OK>0) ? "OK" : "Error");
-	OK = PCA9596_configAll(&IOBoard_1); // configure this PCA9596 chip
-	cprintf("Config Board 1=%s\r\n", (OK>0) ? "OK" : "Error");
-	cprintf("Press any key to continue.\r\n");
+	int ck = clock();
+	for (i = 0; i<100; ++i)
+	{
+		OK = PCA9596_configAll(&IOBoard_0); // configure this PCA9596 chip
+	}
+	ck = clock() - ck;
+	cprintf("Clock=%d\r\n", ck);
+
+	//OK = PCA9596_configAll(&IOBoard_0); // configure this PCA9596 chip
+	//cprintf("Config Board 0=%s\r\n", (OK>0) ? "OK" : "Error");
+	//OK = PCA9596_configAll(&IOBoard_1); // configure this PCA9596 chip
+	//cprintf("Config Board 1=%s\r\n", (OK>0) ? "OK" : "Error");
+	//cprintf("Press any key to continue.\r\n");
 
 	while (!kbhit())
 	{
